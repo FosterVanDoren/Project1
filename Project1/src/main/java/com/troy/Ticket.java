@@ -16,10 +16,9 @@ public class Ticket {
 	@Id
 	@Column(name ="trans_id")
 	private int transId;
-	@OneToMany
 	@Column(name = "emp_id")
 	private int empId;
-	private List<Employee> employees;
+//	private List<Employee> employees;
 	@Column(name ="reimbursement_type")
 	private String rType;
 	private Date date;
@@ -55,13 +54,13 @@ public class Ticket {
 		this.empId = empId;
 	}
 	
-	public List<Employee> getEmployees() {
-		return employees;
-	}
-
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
-	}
+//	public List<Employee> getEmployees() {
+//		return employees;
+//	}
+//
+//	public void setEmployees(List<Employee> employees) {
+//		this.employees = employees;
+//	}
 
 	public String getrType() {
 		return rType;

@@ -12,7 +12,7 @@
 		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 		<property name="hbm2ddl.auto">update</property>
 		<property name="show_sql">true</property>
-		<mapping class="com.troy.project1.EmployeeLogin"/>
-		
+		<mapping class="com.troy.Employee"/>
+		<mapping class="com.troy.Ticket"/>
 	</session-factory>
 </hibernate-configuration>

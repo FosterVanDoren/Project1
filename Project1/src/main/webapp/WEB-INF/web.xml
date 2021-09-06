@@ -10,8 +10,53 @@
   	<url-pattern>/EmployeeLogin</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>AddTicketServlet</servlet-name>
+  	<servlet-class>com.troy.AddTicketServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AddTicketServlet</servlet-name>
+  	<url-pattern>/AddTicket</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>DeleteTicketServlet</servlet-name>
+  	<servlet-class>com.troy.DeleteTicketServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>DeleteTicketServlet</servlet-name>
+  	<url-pattern>/DeleteTicket</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>UpdateTicketServlet</servlet-name>
+  	<servlet-class>com.troy.UpdateTicketServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UpdateTicketServlet</servlet-name>
+  	<url-pattern>/UpdateServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ShowTicketsEMPServlet</servlet-name>
+  	<servlet-class>com.troy.ShowTicketsEMPServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ShowTicketsEMPServlet</servlet-name>
+  	<url-pattern>/TicketsEMP</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ShowTicketsFMServlet</servlet-name>
+  	<servlet-class>com.troy.ShowTicketsFMServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ShowTicketsFMServlet</servlet-name>
+  	<url-pattern>/TicketsFM</url-pattern>
+  </servlet-mapping>
+  
   <welcome-file-list>
-  	<welcome-file>Index.html</welcome-file>
+  	<welcome-file>Login.html</welcome-file>
   </welcome-file-list>
   
 </web-app>

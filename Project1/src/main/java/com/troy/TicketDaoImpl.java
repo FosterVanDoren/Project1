@@ -40,11 +40,12 @@ public class TicketDaoImpl implements TicketDAO{
 		Transaction transaction = null;
 		Ticket tick = new Ticket();
 		try (Session session = HibernateSetup.getFactory().openSession()){
-			String hql = "update tickets set reimbursement_type= :rt, reimburse_amount= :ra, status= :s";
+			String hql = "update tickets set reimbursement_type= :rt, reimburse_amount= :ra, status= :s where trans_id = :ti";
 			Query query = session.createQuery(hql);
 			query.setParameter("rt", tick.getrType());
 			query.setParameter("ra", tick.getrAmount());
 			query.setParameter("s", tick.getStatus());
+			query.setParameter("ti", tick.getTransId());
 			transaction = session.beginTransaction();
 			int result = query.executeUpdate();
 			transaction.commit();
@@ -100,13 +101,16 @@ public class TicketDaoImpl implements TicketDAO{
 	}
 
 	@Override
-	public Ticket getTicketById(int id) throws SQLException {
-		Ticket ticket = new Ticket();
+	public List<Ticket> getTicketById(int id) throws SQLException {
+		Ticket tick = new Ticket();
+		List<Ticket> ticket = new ArrayList();
 		Transaction transaction = null;
 		try (Session session = HibernateSetup.getFactory().openSession()){
-			String hql = "from tickets where trans_id= :ti";
+			String hql = "from tickets where emp_id= :ei";
 			Query query = session.createQuery(hql);
-			query.setParameter("ti", ticket.getTransId());
+			query.setParameter("ei", tick.getEmpId());
+//			ticket = query.list();
+			ticket.add(tick);
 			transaction = session.beginTransaction();
 			int result = query.executeUpdate();
 			transaction.commit();
