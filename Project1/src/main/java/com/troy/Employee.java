@@ -6,17 +6,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 
 @Entity
-@Table(name = "employee")
+//@Table(name = "employee")
 public class Employee {
 
 	@Id
-	@Column
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "emp_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int empId;
 //	@ManyToOne
 //	private Ticket tickets;
@@ -29,6 +30,7 @@ public class Employee {
 	private String password;
 	@Column(name = "reimbursement_total")
 	private double rTotal;
+	@Column(name = "emp_status")
 	private String status;
 	
 	public Employee() {}

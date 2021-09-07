@@ -5,20 +5,25 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="tickets")
+//@Table(name ="tickets")
 public class Ticket {
 	@Id
-	@Column(name ="trans_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name ="trans_id", updatable = false, nullable = false)
 	private int transId;
+	
 	@Column(name = "emp_id")
-	private int empId;
 //	private List<Employee> employees;
+	private int empId;
 	@Column(name ="reimbursement_type")
 	private String rType;
 	private Date date;
@@ -37,6 +42,13 @@ public class Ticket {
 		this.rAmount = rAmount;
 		this.status = status;
 	}
+//	public Ticket(int transId, List<Employee> employees, String rType, Date date, double rAmount, String status) {
+//		this.transId = transId;
+//		this.employees = employees;
+//		this.rType = rType;
+//		this.rAmount = rAmount;
+//		this.status = status;
+//	}
 
 	public int getTransId() {
 		return transId;
@@ -102,12 +114,19 @@ public class Ticket {
 		this.status = status;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Ticket [transId=" + transId + ", employees=" + employees + ", rType=" + rType + ", date=" + date
+//				+ ", rReason=" + rReason + ", rAmount=" + rAmount + ", status=" + status + "]";
+//	}
+
 	@Override
 	public String toString() {
 		return "Ticket [transId=" + transId + ", empId=" + empId + ", rType=" + rType + ", date=" + date + ", rReason="
 				+ rReason + ", rAmount=" + rAmount + ", status=" + status + "]";
 	}
 
+	
 	
 	
 	

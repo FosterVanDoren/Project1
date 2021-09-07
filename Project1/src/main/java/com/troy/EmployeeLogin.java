@@ -2,10 +2,10 @@ package com.troy;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,25 +21,33 @@ public class EmployeeLogin extends HttpServlet{
 		String password = request.getParameter("password");
 		
 		try {
-			EmployeeDAO daoE = EmployeeDAOFactory.getEmployeeDao();
-			Employee emp= daoE.getEmployeeLogin(username, password);;
+//			EmployeeDAO daoE = EmployeeDAOFactory.getEmployeeDao();
+//			Employee emp= daoE.getEmployeeLogin(username, password);
+			Employee emp = EmployeeDAOFactory.getEmployeeDao().getEmployeeLogin(username, password);
 			
+//			List<Employee> employees = new ArrayList();
+//			employees.add(emp);
 			
 //			Employee emp = daoE.getEmployeeLogin(username, password);	
 			HttpSession session = request.getSession();
 			session.setAttribute("id", emp.getEmpId());
+			session.setAttribute("status", emp.getStatus());
 			
-//			if  (emp.getStatus() == "Employee") {
-//				RequestDispatcher rd = request.getRequestDispatcher("ShowTicketsEMPServlet");
-//				rd.forward(request, response);
-//			}else if (emp.getStatus() == "Finance Manager") {
-//				RequestDispatcher rd = request.getRequestDispatcher("ShowTicketsFMServlet");
-//				rd.forward(request, response);
-//			}else {
-//				out.println("Sorry invalid username and password");
-//				RequestDispatcher rd = request.getRequestDispatcher("/Login.html");
-//				rd.include(request, response);
-//			}
+//			HttpSession session = request.getSession();
+//			session.setAttribute("list", employees);
+		
+			
+			if  (emp.getStatus().equals("employee")) {
+				RequestDispatcher rd = request.getRequestDispatcher("/AddTicket.html"); // /AddTicket.html or /TicketsEMP
+				rd.forward(request, response);
+			}else if (emp.getStatus().equals("finance manager")) {
+				RequestDispatcher rd = request.getRequestDispatcher("/TicketsFM");
+				rd.forward(request, response);
+			}else {
+				out.println("Sorry invalid username and password");
+				RequestDispatcher rd = request.getRequestDispatcher("/Login.html");
+				rd.include(request, response);
+			}
 			
 			out.println("Hello, " + emp.getEmpId() +", " + emp.getStatus());
 		}catch (Exception e) {

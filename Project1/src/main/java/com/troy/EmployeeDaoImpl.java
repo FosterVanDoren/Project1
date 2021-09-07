@@ -16,20 +16,19 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	public Employee getEmployeeLogin(String username, String password) throws SQLException {
 		Employee emp = new Employee();
 		Transaction transaction = null;
-		try (Session session = HibernateSetup.getFactory().openSession()){
+		Session session = HibernateSetup.getFactory().openSession();
+		try {
 			String hql = "from Employee where username= :un AND password = :pw";
 			Query query = session.createQuery(hql);
-			query.setParameter("un", emp.getUsername());
-			query.setParameter("pw", emp.getPassword());
-			transaction = session.beginTransaction();
-			int result = query.executeUpdate();
+			transaction = session.beginTransaction(); // based on exmaple
+			query.setParameter("un", username);
+			query.setParameter("pw", password);
+//			transaction = session.beginTransaction();
+			emp = (Employee) query.uniqueResult();
 			transaction.commit();
+//			HibernateSetup.getFactory().close();
 		}catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}else {
 			e.printStackTrace();
-		}
 		}
 		return emp;
 	}
