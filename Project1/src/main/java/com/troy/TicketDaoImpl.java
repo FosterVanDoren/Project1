@@ -18,9 +18,10 @@ public class TicketDaoImpl implements TicketDAO{
 	@Override
 	public void addTicket(Ticket ticket) throws SQLException {
 		Transaction transaction = null;
-		try (Session session = HibernateSetup.getFactory().openSession()){
-			String hql = "insert into tickets (reimbursement_type, reimburse_reason, reimbusre_amount)" + 
-					  	 "Select reimbursement_type, reimburse_reason,reimburse_amount";
+		
+		try {
+			Session session = HibernateSetup.getFactory().openSession();
+			String hql = "insert into Ticket (date, empId, rAmount, rReason, rType) Select(?,?,?,?,?)";
 			Query query = session.createQuery(hql);
 			transaction = session.beginTransaction();
 			int result = query.executeUpdate();
@@ -40,20 +41,19 @@ public class TicketDaoImpl implements TicketDAO{
 		Transaction transaction = null;
 		Ticket tick = new Ticket();
 		try (Session session = HibernateSetup.getFactory().openSession()){
-			String hql = "update tickets set reimbursement_type= :rt, reimburse_amount= :ra, status= :s";
-			Query query = session.createQuery(hql);
-			query.setParameter("rt", tick.getrType());
-			query.setParameter("ra", tick.getrAmount());
-			query.setParameter("s", tick.getStatus());
+//			String hql = "update Ticket set status= :s where trans_Id = :ti";
+//			String hql = "update Ticket set reimbursement_type= :rt, reimburse_amount= :ra, status= :s where trans_id = :ti";
+//			Query query = session.createQuery(hql);
 			transaction = session.beginTransaction();
-			int result = query.executeUpdate();
+//			query.setParameter("rt", tick.getrType());
+//			query.setParameter("ra", tick.getrAmount());
+//			query.setParameter("s", tick.getStatus());
+//			query.setParameter("ti", tick.getTransId());
+			session.update(ticket);
+//			int result = query.executeUpdate();
 			transaction.commit();
 		}catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}else {
 			e.printStackTrace();
-		}
 		}
 		
 	}
@@ -61,20 +61,15 @@ public class TicketDaoImpl implements TicketDAO{
 	@Override
 	public void deleteTicket(int id) throws SQLException {
 		Transaction transaction = null;
-		Ticket tick = new Ticket();
 		try (Session session = HibernateSetup.getFactory().openSession()){
-			String hql = "delete from tickets t where t.trans_id= :tid";
+			String hql = "delete from Ticket  where trans_id= :tid";
 			Query query = session.createQuery(hql);
-			query.setParameter("tid", tick.getTransId());
+			query.setParameter("tid", id);
 			transaction = session.beginTransaction();
 			int result = query.executeUpdate();
 			transaction.commit();
 		}catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}else {
 			e.printStackTrace();
-		}
 		}
 	}
 
@@ -83,39 +78,51 @@ public class TicketDaoImpl implements TicketDAO{
 		List<Ticket> tick = new ArrayList();
 		Transaction transaction = null;
 		try (Session session = HibernateSetup.getFactory().openSession()){
-			String hql = "from tickets";
+			String hql = "from Ticket";
 			Query query = session.createQuery(hql);
 			tick = query.list();
 			transaction = session.beginTransaction();
-			int result = query.executeUpdate();
+//			int result = query.executeUpdate();
 			transaction.commit();
 		}catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}else {
 			e.printStackTrace();
-		}
 		}
 		return tick;
 	}
 
 	@Override
-	public Ticket getTicketById(int id) throws SQLException {
+	public List<Ticket> getTicketById(int id) throws SQLException {
+//		Ticket tick = new Ticket();
+		List<Ticket> ticket = new ArrayList();
+		Transaction transaction = null;
+		try (Session session = HibernateSetup.getFactory().openSession()){
+			String hql = "from Ticket where emp_id= :ei";
+			Query query = session.createQuery(hql);
+			query.setParameter("ei", id);
+			ticket = query.list();
+//			ticket.add(tick);
+			transaction = session.beginTransaction();
+//			List result = query.list();
+			transaction.commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ticket;
+	}
+
+	@Override
+	public Ticket getTicketByTransId(int id) throws SQLException {
 		Ticket ticket = new Ticket();
 		Transaction transaction = null;
 		try (Session session = HibernateSetup.getFactory().openSession()){
-			String hql = "from tickets where trans_id= :ti";
+			String hql = "from Ticket where trans_id= :ti";
 			Query query = session.createQuery(hql);
-			query.setParameter("ti", ticket.getTransId());
+			query.setParameter("ti", id);
 			transaction = session.beginTransaction();
-			int result = query.executeUpdate();
+			ticket = (Ticket) query.uniqueResult();
 			transaction.commit();
 		}catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}else {
 			e.printStackTrace();
-		}
 		}
 		return ticket;
 	}

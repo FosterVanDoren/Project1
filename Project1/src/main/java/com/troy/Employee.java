@@ -2,21 +2,25 @@ package com.troy;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 
 @Entity
-@Table(name = "employee")
+//@Table(name = "employee")
 public class Employee {
 
 	@Id
-	@Column
+	@Column(name = "emp_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int empId;
-	@ManyToOne
-	private Ticket tickets;
+//	@ManyToOne
+//	private Ticket tickets;
 	@Column(name ="firstname")
 	private String firstName;
 	@Column(name ="lastname")
@@ -26,10 +30,12 @@ public class Employee {
 	private String password;
 	@Column(name = "reimbursement_total")
 	private double rTotal;
+	@Column(name = "emp_status")
+	private String status;
 	
 	public Employee() {}
 	
-	public Employee(int empId, String firstName, String lastName, String email, String username, String password, double rTotal) {
+	public Employee(int empId, String firstName, String lastName, String email, String username, String password, double rTotal, String status) {
 		this.empId = empId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -37,6 +43,7 @@ public class Employee {
 		this.username = username;
 		this.password = password;
 		this.rTotal = rTotal;
+		this.status = status;
 	}
 
 	public int getEmpId() {
@@ -94,12 +101,25 @@ public class Employee {
 	public void setrTotal(double rTotal) {
 		this.rTotal = rTotal;
 	}
+	
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
-		return "Employee [empId=" + empId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", username=" + username + ", password=" + password + ", rTotal=" + rTotal + "]";
+		return "Employee [empId=" + empId + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", email=" + email + ", username=" + username + ", password=" + password + ", rTotal="
+				+ rTotal + ", status=" + status + "]";
 	}
+
+	
 	
 	
 	
