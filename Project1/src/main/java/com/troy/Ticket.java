@@ -20,9 +20,7 @@ public class Ticket {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name ="trans_id", updatable = false, nullable = false)
 	private int transId;
-	
 	@Column(name = "emp_id")
-//	private List<Employee> employees;
 	private int empId;
 	@Column(name ="reimbursement_type")
 	private String rType;
@@ -31,6 +29,7 @@ public class Ticket {
 	private String rReason;
 	@Column(name ="reimburse_amount")
 	private double rAmount;
+	@Column(columnDefinition="char(30) Default 'Pending'")
 	private String status;
 	
 	public Ticket() {}
@@ -42,13 +41,6 @@ public class Ticket {
 		this.rAmount = rAmount;
 		this.status = status;
 	}
-//	public Ticket(int transId, List<Employee> employees, String rType, Date date, double rAmount, String status) {
-//		this.transId = transId;
-//		this.employees = employees;
-//		this.rType = rType;
-//		this.rAmount = rAmount;
-//		this.status = status;
-//	}
 
 	public int getTransId() {
 		return transId;
@@ -65,14 +57,6 @@ public class Ticket {
 	public void setEmpId(int empId) {
 		this.empId = empId;
 	}
-	
-//	public List<Employee> getEmployees() {
-//		return employees;
-//	}
-//
-//	public void setEmployees(List<Employee> employees) {
-//		this.employees = employees;
-//	}
 
 	public String getrType() {
 		return rType;
@@ -113,12 +97,6 @@ public class Ticket {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-//	@Override
-//	public String toString() {
-//		return "Ticket [transId=" + transId + ", employees=" + employees + ", rType=" + rType + ", date=" + date
-//				+ ", rReason=" + rReason + ", rAmount=" + rAmount + ", status=" + status + "]";
-//	}
 
 	@Override
 	public String toString() {

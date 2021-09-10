@@ -27,10 +27,7 @@ public class AddTicketServlet extends HttpServlet{
 		
 		HttpSession sess = request.getSession(false);
 		int id = (int) sess.getAttribute("id");
-		
-//		HttpSession sess = request.getSession(false);
-//		List<Employee> emp= (List<Employee>) sess.getAttribute("list");
-		
+				
 		Session session = HibernateSetup.getFactory().openSession();
 		
 		
@@ -41,13 +38,12 @@ public class AddTicketServlet extends HttpServlet{
 		ticket.setrAmount(amount);
 		ticket.setrReason(reason);
 		ticket.setrType(type);
+		ticket.setStatus("Pending");
 		
 		
 		
 		try {
 			Transaction transaction = session.beginTransaction();
-//			TicketDAO daoT = TicketDAOFactory.getTicketDao();
-//			daoT.addTicket(ticket);
 			session.save(ticket);
 			transaction.commit();
 			

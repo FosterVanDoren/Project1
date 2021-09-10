@@ -15,8 +15,6 @@ public class DeleteTicketServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-//		Ticket ticket = new Ticket();
-//		int tick = ticket.getTransId();
 		HttpSession session = request.getSession(false);
 		String status= (String) session.getAttribute("status");
 		
