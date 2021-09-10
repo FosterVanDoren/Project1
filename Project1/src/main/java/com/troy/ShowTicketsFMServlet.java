@@ -21,29 +21,48 @@ public class ShowTicketsFMServlet extends HttpServlet{
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		try {
+			String status = "";
+			TicketDAO dao = TicketDAOFactory.getTicketDao();
+			TicketDAO daoT = TicketDAOFactory.getTicketDao();
+			List<Ticket> tickets = new ArrayList();
 			
-			List<Ticket> tickets  = TicketDAOFactory.getTicketDao().getTickets();
-			
+			String statusSelect = request.getParameter("status-select");
+			if(statusSelect == null || statusSelect.equals("all")) {
+				tickets  = TicketDAOFactory.getTicketDao().getTickets();
+			}else{
+				tickets = daoT.getTicketByStatus(statusSelect);
+			}
 			out.println("<!DOCTYPE html>\r\n"
 					+ "<html>\r\n"
 					+ "<head>\r\n"
 					+ "<meta charset=\"ISO-8859-1\">\r\n"
 					+ "<title>Employee Tickets Table</title>");
+			out.println("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css\" integrity=\"sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l\" crossorigin=\"anonymous\">");
 			out.println("  <style>\r\n"
 					+ "        tr:nth-child(odd){\r\n"
 					+ "    background-color: #511845;\r\n"
-					+ "    color: #FF5733;\r\n"
+					+ "    color: white;\r\n"
 					+ "}\r\n"
 					+ "tr:nth-child(even){\r\n"
 					+ "    background-color: #FF5733;\r\n"
-					+ "    color: #511845;\r\n"
+					+ "    color: black;\r\n"
 					+ "}\r\n"
 					+ "\r\n"
+					+ " .btn{\r\n"
+					+ "    background-color: #FF5733;\r\n"
+					+ "    color: #511845;\r\n"
+					+ "\r\n"
+					+ "}\r\n"
+					+ ".btn:hover{\r\n"
+					+ "    background-color: #900C3F;\r\n"
+					+ "    color: #FF5733;\r\n"
+					+ "}\r\n"
 					+ "    </style>");
 			out.println("<body>");
+			out.println("<div class=\"container\">");
 			out.println(" <table class=\"table table-bordered\">\r\n"
 					+ "        <thead >\r\n"
-					+ "            <tr style=\"background-color: #C70039; color: #511845;\">\r\n"
+					+ "            <tr style=\"background-color: #C70039; color: White;\">\r\n"
 					+ "                <th>TransID</th>\r\n"
 					+ "                <th>EmpID</th>\r\n"
 					+ "                <th>Type</th>\r\n"
@@ -56,7 +75,6 @@ public class ShowTicketsFMServlet extends HttpServlet{
 					+ "        </thead>");
 			out.println("<tbody>");
 			for(Ticket ticket : tickets) {
-//			for(int i =0; i < ticket.size(); i++) {
 				out.println("<tr>\r\n"
 						+ "                <td>"+ ticket.getTransId() +"</td>\r\n"
 						+ "                <td>"+ ticket.getEmpId()+ "</td>\r\n"
@@ -74,8 +92,25 @@ public class ShowTicketsFMServlet extends HttpServlet{
 			}
 			out.println("</tbody>");
 			out.println("</table>");
+			out.println("<form method=\"post\" action=\"TicketsFM\">\r\n"
+					+ "			<div class=\"form-group row\">\r\n"
+					+ "			<span>\r\n"
+					+ "                <label for=\"status-select\">Status</label>\r\n"
+					+ "                <select class=\"form-control-md\" id=\"status\" name=\"status-select\" \" required>\r\n"
+					+ "                  <option value=\"all\" selected>all</option>\r\n"
+					+ "                  <option value=\"all\">all</option>\r\n"
+					+ "                  <option value=\"pending\">Pending</option>\r\n"
+					+ "                  <option value=\"Accepted\">Accepted</option>\r\n"
+					+ "                  <option value=\"Rejected\">Rejected</option>\r\n"
+					+ "                </select>\r\n"
+					+ "                <button type=\"submit\" class=\"btn btn-dark\" \">Submit</button>\r\n"
+					+ "             </span>\r\n"
+					+ "          </div>\r\n"
+					+ "		</form>\r\n"
+					+ "	</div>");
 			out.println("</body>\r\n"
 					+ "</html>");
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,7 +125,11 @@ public class ShowTicketsFMServlet extends HttpServlet{
 		try {
 			
 			List<Ticket> tickets  = TicketDAOFactory.getTicketDao().getTickets();
+			TicketDAO dao = TicketDAOFactory.getTicketDao();
+			TicketDAO daoT = TicketDAOFactory.getTicketDao();
 			
+			String statusSelect = request.getParameter("status-select");
+		    tickets = daoT.getTicketByStatus(statusSelect);
 			out.println("<!DOCTYPE html>\r\n"
 					+ "<html>\r\n"
 					+ "<head>\r\n"
@@ -140,6 +179,22 @@ public class ShowTicketsFMServlet extends HttpServlet{
 			}
 			out.println("</tbody>");
 			out.println("</table>");
+			out.println("<form method=\"post\" action=\"TicketsFM\">\r\n"
+					+ "			<div class=\"form-group row\">\r\n"
+					+ "			<span>\r\n"
+					+ "                <label for=\"status-select\">Status</label>\r\n"
+					+ "                <select class=\"form-control-md\" id=\"status\" name=\"status-select\" \" required>\r\n"
+					+ "                  <option value=\"\">-----Select Status-----</option>\r\n"
+					+ "                  <option value=\"pending\">Pending</option>\r\n"
+					+ "                  <option value=\"Accepted\">Accepted</option>\r\n"
+					+ "                  <option value=\"Rejected\">Rejected</option>\r\n"
+					+ "                </select>\r\n"
+					+ "                <button type=\"submit\" class=\"btn btn-dark\" \">Submit</button>\r\n"
+					+ "             </span>\r\n"
+					+ "          </div>\r\n"
+					+ "		</form>\r\n"
+					+ "	</div>");
+			
 			out.println("</body>\r\n"
 					+ "</html>");
 		} catch (Exception e) {

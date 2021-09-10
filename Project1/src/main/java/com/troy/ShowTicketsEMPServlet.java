@@ -24,21 +24,23 @@ public class ShowTicketsEMPServlet extends HttpServlet{
 					+ "<head>\r\n"
 					+ "<meta charset=\"ISO-8859-1\">\r\n"
 					+ "<title>Employee Tickets Table</title>");
+			out.println("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css\" integrity=\"sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l\" crossorigin=\"anonymous\">");
 			out.println("  <style>\r\n"
 					+ "        tr:nth-child(odd){\r\n"
 					+ "    background-color: #511845;\r\n"
-					+ "    color: #FF5733;\r\n"
+					+ "    color: White;\r\n"
 					+ "}\r\n"
 					+ "tr:nth-child(even){\r\n"
 					+ "    background-color: #FF5733;\r\n"
-					+ "    color: #511845;\r\n"
+					+ "    color: Black;\r\n"
 					+ "}\r\n"
 					+ "\r\n"
 					+ "    </style>");
 			out.println("<body>");
+			out.println("<div class=\"container\">");
 			out.println(" <table class=\"table table-bordered\">\r\n"
 					+ "        <thead >\r\n"
-					+ "            <tr style=\"background-color: #C70039; color: #511845;\">\r\n"
+					+ "            <tr style=\"background-color: #C70039; color: White;\">\r\n"
 					+ "                <th>TransID</th>\r\n"
 					+ "                <th>EmpID</th>\r\n"
 					+ "                <th>Type</th>\r\n"
@@ -51,7 +53,6 @@ public class ShowTicketsEMPServlet extends HttpServlet{
 					+ "        </thead>");
 			out.println("<tbody>");
 			for(Ticket ticket : tickets) {
-//			for(int i =0; i < ticket.size(); i++) {
 				out.println("<tr>\r\n"
 						+ "                <td>"+ ticket.getTransId() +"</td>\r\n"
 						+ "                <td>"+ ticket.getEmpId()+ "</td>\r\n"
@@ -68,6 +69,7 @@ public class ShowTicketsEMPServlet extends HttpServlet{
 			out.println("</tbody>");
 			out.println("</table>");
 			out.println("<a href=\"http://localhost:8080/Project1/AddTicket.html\" type=\"button\" class=\"btn btn-dark\">View Tickets</a>");
+			out.println("</div>");
 			out.println("</body>\r\n"
 					+ "</html>");
 		} catch (Exception e) {
@@ -117,7 +119,6 @@ public class ShowTicketsEMPServlet extends HttpServlet{
 					+ "        </thead>");
 			out.println("<tbody>");
 			for(Ticket ticket : tickets) {
-//			for(int i =0; i < ticket.size(); i++) {
 				out.println("<tr>\r\n"
 						+ "                <td>"+ ticket.getTransId() +"</td>\r\n"
 						+ "                <td>"+ ticket.getEmpId()+ "</td>\r\n"

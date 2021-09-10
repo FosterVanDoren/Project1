@@ -19,8 +19,6 @@ public class Employee {
 	@Column(name = "emp_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int empId;
-//	@ManyToOne
-//	private Ticket tickets;
 	@Column(name ="firstname")
 	private String firstName;
 	@Column(name ="lastname")
